@@ -1,0 +1,182 @@
+[
+  {
+    "id": 14,
+    "type": "subjects",
+    "text": "subjects: Mag'liwmatlar bazasi. Kimdiki ekenin bilesen Ernazar",
+    "embedding": []
+  },
+  {
+    "id": 19,
+    "type": "subjects",
+    "text": "subjects: Kiberqa'wipsizlik. Kiber etika",
+    "embedding": []
+  },
+  {
+    "id": 20,
+    "type": "subjects",
+    "text": "subjects: Jasalma intellekt tiykarlari. Jasalma intellekt tiykarlari haqqinda tu'sinik",
+    "embedding": []
+  },
+  {
+    "id": 21,
+    "type": "subjects",
+    "text": "subjects: Kriptografya usillari. shifrlaw",
+    "embedding": []
+  },
+  {
+    "id": 22,
+    "type": "subjects",
+    "text": "subjects: Stenografik algoritimler. stenografya tusnigi",
+    "embedding": []
+  },
+  {
+    "id": 23,
+    "type": "subjects",
+    "text": "subjects: Paydalaniwdi basqariw. Paydalaniwdi basqariw",
+    "embedding": []
+  },
+  {
+    "id": 24,
+    "type": "subjects",
+    "text": "subjects: Machine learning. Machine learning",
+    "embedding": []
+  },
+  {
+    "id": 25,
+    "type": "subjects",
+    "text": "subjects: Jasalma intelekt tikarlari. Jasalma intelekt tikarlari",
+    "embedding": []
+  },
+  {
+    "id": 26,
+    "type": "subjects",
+    "text": "subjects: Jasalma intelekt ha'm mashinali oqitiw texnologyalari. Jasalma intelekt ha'm mashinali oqitiw texnologyalari",
+    "embedding": []
+  },
+  {
+    "id": 27,
+    "type": "subjects",
+    "text": "subjects: Kiber huqiq ha'm kiber etika. Kiber huqiq ha'm kiber etika",
+    "embedding": []
+  },
+  {
+    "id": 28,
+    "type": "subjects",
+    "text": "subjects: IOT qa'wipsizligi. IOT qa'wipsizligi",
+    "embedding": []
+  },
+  {
+    "id": 29,
+    "type": "subjects",
+    "text": "subjects: Axborot Xafsizlik protokollari. Axborot Xafsizlik protokollari",
+    "embedding": []
+  },
+  {
+    "id": 30,
+    "type": "subjects",
+    "text": "subjects: kampyuter kriminalistikasi. kampyuter kriminalistikasi",
+    "embedding": []
+  },
+  {
+    "id": 3,
+    "type": "teachers",
+    "text": "teachers: . ",
+    "embedding": []
+  },
+  {
+    "id": 4,
+    "type": "teachers",
+    "text": "teachers: . ",
+    "embedding": []
+  },
+  {
+    "id": 5,
+    "type": "teachers",
+    "text": "teachers: . ",
+    "embedding": []
+  },
+  {
+    "id": 6,
+    "type": "teachers",
+    "text": "teachers: . ",
+    "embedding": []
+  },
+  {
+    "id": 10,
+    "type": "teachers",
+    "text": "teachers: . ",
+    "embedding": []
+  },
+  {
+    "id": 11,
+    "type": "teachers",
+    "text": "teachers: . ",
+    "embedding": []
+  },
+  {
+    "id": 12,
+    "type": "teachers",
+    "text": "teachers: . ",
+    "embedding": []
+  },
+  {
+    "id": 13,
+    "type": "teachers",
+    "text": "teachers: . ",
+    "embedding": []
+  },
+  {
+    "id": 14,
+    "type": "teachers",
+    "text": "teachers: . ",
+    "embedding": []
+  },
+  {
+    "id": 16,
+    "type": "teachers",
+    "text": "teachers: . ",
+    "embedding": []
+  },
+  {
+    "id": 29,
+    "type": "news",
+    "text": "news: hala madrit. 🇫🇷 Kilian Mbappe bu mavsum 19 gol va 4 assistni amalga oshirishga ulguribdi.\r\n\r\n⚽️ FUTBOL LIVE - https://t.me/+6IMnxMyfyAZjZmRi",
+    "embedding": []
+  },
+  {
+    "id": 28,
+    "type": "news",
+    "text": "news: kim ne islep atir. Jigi ne islep atsizlar",
+    "embedding": []
+  },
+  {
+    "id": 23,
+    "type": "news",
+    "text": "news: Rawshan. Windows qostinba?",
+    "embedding": []
+  },
+  {
+    "id": 22,
+    "type": "news",
+    "text": "news: Ernar. Qalay amansanba ne talap",
+    "embedding": []
+  },
+  {
+    "id": 18,
+    "type": "news",
+    "text": "news: sadas. zsdadadsasdfsaasfsdfafssggfgsgehngfdfoisajioadovwasjiadbJIH XASKSDNIJAAKSN C JQDS NSAJ ASDJBADABSZFA FNS LDSNLIFASLGD",
+    "embedding": []
+  },
+  {
+    "id": 16,
+    "type": "news",
+    "text": "news: Rawshan . Ne Kvatsan",
+    "embedding": []
+  },
+  {
+    "id": 13,
+    "type": "news",
+    "text": "news: IT CENTER. ITdi uyrenin' ballarim. Pul tu'spey atir",
+    "embedding": []
+  }
+]
