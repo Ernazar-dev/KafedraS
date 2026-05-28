@@ -1,0 +1,4 @@
+.env
+public
+test-api.http
+/node_modules
