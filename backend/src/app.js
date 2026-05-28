@@ -35,7 +35,12 @@ const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:3000",
   "https://kafedrasayd.uz",
+  "https://kafedrasayt.onrender.com", // Render frontend manzili
 ];
+
+if (process.env.FRONTEND_URL) {
+  allowedOrigins.push(process.env.FRONTEND_URL);
+}
 
 const corsOptions = {
   origin: function (origin, callback) {
