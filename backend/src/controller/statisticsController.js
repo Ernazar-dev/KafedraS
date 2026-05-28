@@ -65,7 +65,7 @@ export const getActivityStats = async (req, res) => {
       ],
       where: {
         timestamp: {
-          [Op.gte]: literal("NOW() - INTERVAL 7 DAY"),
+          [Op.gte]: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
         },
       },
       group: [fn("DATE", col("timestamp"))],
@@ -117,7 +117,7 @@ export const getAIStats = async (req, res) => {
       where: {
         action: "ai_chat",
         timestamp: {
-          [Op.gte]: literal("NOW() - INTERVAL 7 DAY"),
+          [Op.gte]: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
         },
       },
       group: [fn("DATE", col("timestamp"))],
@@ -147,7 +147,7 @@ export const getLoginStats = async (req, res) => {
       where: {
         action: "login",
         timestamp: {
-          [Op.gte]: literal("NOW() - INTERVAL 7 DAY"),
+          [Op.gte]: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
         },
       },
       group: [fn("DATE", col("timestamp"))],

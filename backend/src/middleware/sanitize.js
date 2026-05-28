@@ -7,7 +7,7 @@ function sanitizeValue(value) {
   if (Array.isArray(value)) {
     return value.map(sanitizeValue);
   }
-  if (typeof value === "object" && value !== null) {
+  if (typeof value === "object" && value !== null && !(value instanceof Date)) {
     const result = {};
     for (const key in value) {
       result[key] = sanitizeValue(value[key]);

@@ -2,47 +2,85 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import axios from "axios";
 import { getEmbedding } from "../utils/embeddings.js";
 import dotenv from "dotenv";
+import { sequelize } from "../config/db.js";
+import { Subject } from "../models/subject.js";
+import { Teacher } from "../models/teacher.js";
+import { News } from "../models/news.js";
+import "../models/index.js"; // load associations
+
 dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const vectorStorePath = path.join(__dirname, "../data/vectorStore.json");
 
-const baseUrl = process.env.BASE_API_URL; // masalan: https://kafedrasayd.uz/api
-
 async function buildVectorDB() {
-  const endpoints = [
-    { key: "subjects", url: `${baseUrl}/subjects` },
-    { key: "teachers", url: `${baseUrl}/teachers` },
-    { key: "news", url: `${baseUrl}/news` },
-  ];
+  try {
+    await sequelize.authenticate();
+    console.log("✅ Ulanish muvaffaqiyatli, RAG indekslash boshlandi...");
 
-  let vectorStore = [];
+    let vectorStore = [];
 
-  for (let ep of endpoints) {
+    // 1. Subjects (Fanlar)
     try {
-      const res = await axios.get(ep.url);
-      for (let item of res.data) {
-        const textBlock = `${ep.key}: ${item.name || item.title || ""}. ${item.description || item.bio || item.content || ""}`;
+      const subjects = await Subject.findAll();
+      for (let item of subjects) {
+        const textBlock = `subjects: ${item.name || ""}. ${item.description || ""}`;
         const embedding = await getEmbedding(textBlock);
-        vectorStore.push({ id: item.id, type: ep.key, text: textBlock, embedding });
+        if (embedding && embedding.length > 0) {
+          vectorStore.push({ id: item.id, type: "subjects", text: textBlock, embedding });
+        }
       }
+      console.log(`✅ Fanlar indekslandi: ${subjects.length} ta`);
     } catch (err) {
-      console.error(`⚠️ ${ep.key} ma'lumot olinmadi:`, err.message);
+      console.error("⚠️ Fanlarni indekslashda xato:", err.message);
     }
-  }
 
-  // Ensure data directory exists
-  const dir = path.dirname(vectorStorePath);
-  if (!fs.existsSync(dir)){
-    fs.mkdirSync(dir, { recursive: true });
-  }
+    // 2. Teachers (Ustozlar)
+    try {
+      const teachers = await Teacher.findAll();
+      for (let item of teachers) {
+        const textBlock = `teachers: ${item.fullname || ""}. ${item.position || ""}`;
+        const embedding = await getEmbedding(textBlock);
+        if (embedding && embedding.length > 0) {
+          vectorStore.push({ id: item.id, type: "teachers", text: textBlock, embedding });
+        }
+      }
+      console.log(`✅ Ustozlar indekslandi: ${teachers.length} ta`);
+    } catch (err) {
+      console.error("⚠️ Ustozlarni indekslashda xato:", err.message);
+    }
 
-  fs.writeFileSync(vectorStorePath, JSON.stringify(vectorStore, null, 2));
-  console.log("✅ RAG vector DB tayyor!");
+    // 3. News (Yangiliklar)
+    try {
+      const newsList = await News.findAll();
+      for (let item of newsList) {
+        const textBlock = `news: ${item.title || ""}. ${item.content || ""}`;
+        const embedding = await getEmbedding(textBlock);
+        if (embedding && embedding.length > 0) {
+          vectorStore.push({ id: item.id, type: "news", text: textBlock, embedding });
+        }
+      }
+      console.log(`✅ Yangiliklar indekslandi: ${newsList.length} ta`);
+    } catch (err) {
+      console.error("⚠️ Yangiliklarni indekslashda xato:", err.message);
+    }
+
+    // Ensure data directory exists
+    const dir = path.dirname(vectorStorePath);
+    if (!fs.existsSync(dir)){
+      fs.mkdirSync(dir, { recursive: true });
+    }
+
+    fs.writeFileSync(vectorStorePath, JSON.stringify(vectorStore, null, 2));
+    console.log("✅ RAG vector DB tayyor!");
+  } catch (err) {
+    console.error("❌ Ma'lumotlar bazasiga ulanishda xato:", err.message);
+  } finally {
+    await sequelize.close();
+  }
 }
 
 buildVectorDB();

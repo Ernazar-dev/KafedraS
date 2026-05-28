@@ -54,7 +54,19 @@ export const deleteUser = async (req, res) => {
     const user = await User.findByPk(req.params.id);
     if (!user) return res.status(404).json({ message: "User topilmadi" });
 
+    const username = user.username;
+    const userId = user.id;
+
     await user.destroy();
+
+    createLog({
+      userId: req.user.id,
+      action: "delete",
+      entity: "User",
+      entityId: userId,
+      description: `Foydalanuvchi '${username}' tizimdan o'chirildi`,
+    }).catch(e => console.error("Log xatosi:", e.message));
+
     res.json({ message: "User o'chirildi" });
   } catch (err) {
     res.status(500).json({ message: err.message });

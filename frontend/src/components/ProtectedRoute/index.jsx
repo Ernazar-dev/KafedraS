@@ -9,7 +9,7 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      // Har safar sahifa o'zgarganda real-time rolni tekshirish
+      // Tizimga birinchi kirganda rolni tekshirish (navigatsiyada har safar so'rov yubormaslik uchun)
       api.get("/auth/me")
         .then((res) => {
           const serverRole = res.data.role;
@@ -26,7 +26,7 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
           window.location.href = "/login";
         });
     }
-  }, [location.pathname, isLoggedIn, role]);
+  }, [isLoggedIn, role]);
 
   if (!isLoggedIn) return <Navigate to="/login" replace />;
   if (allowedRoles && !allowedRoles.includes(role))

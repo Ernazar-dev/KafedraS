@@ -1,3 +1,4 @@
+import { Op } from "sequelize";
 import bcrypt from "bcryptjs";
 import User from "../models/user.js";
 import { sequelize } from "../config/db.js";
@@ -10,7 +11,11 @@ export const createSuperAdmin = async () => {
     const saUsername = process.env.SUPERADMIN_USERNAME;
     const saPassword = process.env.SUPERADMIN_PASSWORD;
 
-    const superAdminExists = await User.findOne({ where: { email: saEmail } });
+    const superAdminExists = await User.findOne({
+      where: {
+        [Op.or]: [{ email: saEmail }, { username: saUsername }]
+      }
+    });
     if (superAdminExists) {
       console.log("SuperAdmin allaqachon mavjud");
       return;

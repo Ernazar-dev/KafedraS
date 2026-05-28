@@ -1,3 +1,4 @@
+import { Op } from "sequelize";
 import bcrypt from "bcryptjs";
 import User from "../models/user.js";
 
@@ -8,7 +9,11 @@ export const createAdmin = async () => {
     const adminUsername = process.env.ADMIN_USERNAME;
     const adminPassword = process.env.ADMIN_PASSWORD;
 
-    const existing = await User.findOne({ where: { email: adminEmail } });
+    const existing = await User.findOne({
+      where: {
+        [Op.or]: [{ email: adminEmail }, { username: adminUsername }]
+      }
+    });
     if (existing) {
       console.log("✅ Admin allaqachon mavjud:", existing.email);
       return;

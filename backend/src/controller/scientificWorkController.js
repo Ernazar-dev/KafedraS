@@ -112,7 +112,9 @@ export const updateWork = async (req, res) => {
     if (title) work.title = title;
     if (description) work.description = description;
     if (date) work.date = new Date(date);
-    if (req.files) work.files = JSON.stringify(req.files);
+    if (req.file) {
+      work.files = `${process.env.BASE_URL}/uploads/${req.file.filename}`;
+    }
 
     await work.save();
 
