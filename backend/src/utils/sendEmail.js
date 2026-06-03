@@ -2,21 +2,30 @@ import nodemailer from "nodemailer";
 import axios from "axios";
 
 export const sendEmail = async (options) => {
+  // Env o'zgaruvchilarni tozalash (Renderda qo'shtirnoq yoki bo'shliqlar qo'shilib qolishini oldini olish uchun)
+  const resendApiKey = process.env.RESEND_API_KEY?.trim().replace(/^["']|["']$/g, "");
+  const emailFrom = process.env.EMAIL_FROM?.trim().replace(/^["']|["']$/g, "");
+  const emailHost = process.env.EMAIL_HOST?.trim().replace(/^["']|["']$/g, "");
+  const emailPort = process.env.EMAIL_PORT?.trim().replace(/^["']|["']$/g, "");
+  const emailSecure = process.env.EMAIL_SECURE?.trim().replace(/^["']|["']$/g, "");
+  const emailUser = process.env.EMAIL_USER?.trim().replace(/^["']|["']$/g, "");
+  const emailPass = process.env.EMAIL_PASS?.trim().replace(/^["']|["']$/g, "");
+
   // Agar RESEND_API_KEY o'rnatilgan bo'lsa, Resend API orqali yuboramiz (Render va boshqa SMTP bloklangan serverlar uchun eng qulay yo'l)
-  if (process.env.RESEND_API_KEY) {
+  if (resendApiKey) {
     try {
       console.log("➡️ Resend API orqali email yuborilmoqda...");
       const response = await axios.post(
         "https://api.resend.com/emails",
         {
-          from: process.env.EMAIL_FROM || `KafedraSayt <onboarding@resend.dev>`,
+          from: emailFrom || `KafedraSayt <onboarding@resend.dev>`,
           to: options.email,
           subject: options.subject,
           text: options.message,
         },
         {
           headers: {
-            Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
+            Authorization: `Bearer ${resendApiKey}`,
             "Content-Type": "application/json",
           },
         }
@@ -39,17 +48,17 @@ export const sendEmail = async (options) => {
   // Aks holda standart SMTP (Nodemailer) orqali yuboramiz
   console.log("➡️ SMTP (Nodemailer) orqali email yuborilmoqda...");
   const transporter = nodemailer.createTransport({
-    host: process.env.EMAIL_HOST || "smtp.gmail.com",
-    port: parseInt(process.env.EMAIL_PORT || "465"),
-    secure: process.env.EMAIL_SECURE !== "false", // Standart holatda true (port 465 uchun), agar "false" bo'lsa false bo'ladi
+    host: emailHost || "smtp.gmail.com",
+    port: parseInt(emailPort || "465"),
+    secure: emailSecure !== "false", // Standart holatda true (port 465 uchun), agar "false" bo'lsa false bo'ladi
     auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
+      user: emailUser,
+      pass: emailPass,
     },
   });
 
   const mailOptions = {
-    from: process.env.EMAIL_FROM || `"KafedraSayt" <${process.env.EMAIL_USER}>`,
+    from: emailFrom || `"KafedraSayt" <${emailUser}>`,
     to: options.email,
     subject: options.subject,
     text: options.message,
