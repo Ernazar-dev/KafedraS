@@ -14,7 +14,9 @@ export const sendEmail = async (options) => {
   // Agar RESEND_API_KEY o'rnatilgan bo'lsa, Resend API orqali yuboramiz (Render va boshqa SMTP bloklangan serverlar uchun eng qulay yo'l)
   if (resendApiKey) {
     try {
-      console.log("➡️ Resend API orqali email yuborilmoqda...");
+      console.log(
+        `➡️ Resend API orqali email yuborilmoqda... (Kalit uzunligi: ${resendApiKey.length}, Boshlanishi: "${resendApiKey.substring(0, 5)}...", Oxiri: "...${resendApiKey.substring(resendApiKey.length - 3)}")`
+      );
       const response = await axios.post(
         "https://api.resend.com/emails",
         {
