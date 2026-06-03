@@ -11,17 +11,27 @@ export const createSuperAdmin = async () => {
     const saUsername = process.env.SUPERADMIN_USERNAME;
     const saPassword = process.env.SUPERADMIN_PASSWORD;
 
+    if (!saEmail || !saUsername || !saPassword) {
+      console.error("❌ SuperAdmin ma'lumotlari .env faylda to'liq ko'rsatilmagan!");
+      return;
+    }
+
+    const hashedPassword = await bcrypt.hash(saPassword, 10);
+
     const superAdminExists = await User.findOne({
       where: {
         [Op.or]: [{ email: saEmail }, { username: saUsername }]
       }
     });
+
     if (superAdminExists) {
-      console.log("SuperAdmin allaqachon mavjud");
+      superAdminExists.username = saUsername;
+      superAdminExists.email = saEmail;
+      superAdminExists.password = hashedPassword;
+      await superAdminExists.save();
+      console.log("✅ SuperAdmin allaqachon mavjud, paroli va ma'lumotlari .env dagi qiymatga yangilandi.");
       return;
     }
-
-    const hashedPassword = await bcrypt.hash(saPassword, 10);
 
     await User.create({
       username: saUsername,
